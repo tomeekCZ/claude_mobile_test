@@ -1,0 +1,11 @@
+{
+  "name": "gps-speedometer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mobile web speedometer using GPS",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/*.test.js\"",
+    "start": "npx --yes serve -l 8080 ."
+  }
+}

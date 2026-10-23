@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>GPS Speedometer</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app">
+    <header class="status">
+      <span id="gps-dot" class="dot" aria-hidden="true"></span>
+      <span id="gps-status">GPS off</span>
+      <span id="accuracy" class="muted"></span>
+    </header>
+
+    <section class="gauge" id="gauge">
+      <svg viewBox="0 0 200 200" class="ring" aria-hidden="true">
+        <circle cx="100" cy="100" r="88" class="ring-bg" pathLength="100" />
+        <circle cx="100" cy="100" r="88" class="ring-fg" id="ring-fg" pathLength="100" />
+      </svg>
+      <div class="readout">
+        <div id="speed" class="speed" aria-live="polite">0</div>
+        <button id="unit" class="unit" type="button" title="Switch units">km/h</button>
+        <div id="heading" class="heading">—</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div><span class="label">Max</span><span id="max" class="value">0</span></div>
+      <div><span class="label">Avg</span><span id="avg" class="value">0</span></div>
+      <div><span class="label">Distance</span><span id="dist" class="value">0.00</span></div>
+      <div><span class="label">Moving</span><span id="time" class="value">00:00</span></div>
+      <div><span class="label">Altitude</span><span id="alt" class="value">—</span></div>
+      <div><span class="label">Source</span><span id="source" class="value">—</span></div>
+    </section>
+
+    <footer class="controls">
+      <button id="start" class="primary" type="button">Start</button>
+      <button id="reset" type="button">Reset trip</button>
+      <button id="hud" type="button" title="Mirror display for windshield reflection">HUD</button>
+    </footer>
+
+    <p id="error" class="error" role="alert" hidden></p>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+:root {
+  --bg: #0b0f14;
+  --panel: #151b23;
+  --text: #e8eef5;
+  --muted: #7d8a99;
+  --accent: #3ddc97;
+  --warn: #ffb547;
+  --bad: #ff5d5d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.muted { color: var(--muted); margin-left: auto; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.dot.good { background: var(--accent); }
+.dot.fair { background: var(--warn); }
+.dot.bad { background: var(--bad); }
+
+.gauge {
+  position: relative;
+  width: min(100%, 60vh);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.ring { width: 100%; height: 100%; transform: rotate(135deg); }
+.ring circle { fill: none; stroke-width: 10; stroke-linecap: round; }
+.ring-bg { stroke: var(--panel); stroke-dasharray: 75 100; }
+.ring-fg {
+  stroke: var(--accent);
+  stroke-dasharray: 0 100;
+  transition: stroke-dasharray 0.4s ease-out, stroke 0.4s;
+}
+.readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.speed {
+  font-size: clamp(72px, 28vw, 160px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.unit {
+  font-size: 20px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 4px 12px;
+}
+.heading { font-size: 18px; color: var(--muted); margin-top: 4px; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.stats > div {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.label { font-size: 12px; color: var(--muted); }
+.value { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.controls { display: flex; gap: 8px; margin-top: auto; }
+.controls button {
+  flex: 1;
+  font: inherit;
+  font-size: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #2a3440;
+  background: var(--panel);
+  color: var(--text);
+}
+.controls button.primary { background: var(--accent); color: #04130c; border: none; font-weight: 600; }
+.controls button.active { border-color: var(--accent); color: var(--accent); }
+
+.error { color: var(--bad); text-align: center; margin: 0; }
+
+/* HUD mode: mirrored, speed only, for reflecting off the windshield at night. */
+body.hud .status,
+body.hud .stats,
+body.hud .ring,
+body.hud .heading { visibility: hidden; }
+body.hud .gauge { transform: scaleY(-1); }
+body.hud .speed { color: var(--accent); }
