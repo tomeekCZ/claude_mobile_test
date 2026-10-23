@@ -10,7 +10,7 @@ import {
   toDisplayDistance,
   headingToCompass,
   formatDuration,
-} from '../js/speed.js';
+} from '../www/js/speed.js';
 
 const fix = (latitude, longitude, timestamp, extra = {}) => ({
   timestamp,

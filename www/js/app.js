@@ -184,7 +184,8 @@ setInterval(() => {
   }
 }, 1000);
 
-if ('serviceWorker' in navigator) {
+// The Android app ships its files inside the APK, so it needs no offline cache.
+if ('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform()) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 

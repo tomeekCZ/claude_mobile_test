@@ -1,6 +1,9 @@
 # GPS Speedometer
 
-A mobile web app (PWA) that shows your current driving speed from GPS. You can install it to the home screen, and once loaded it also works offline.
+Shows your current driving speed from GPS. It comes in two forms:
+
+- **Android app (APK)**: all files are inside the app, so it needs no internet. Built with [Capacitor](https://capacitorjs.com).
+- **Web app (PWA)**: runs in any phone browser over HTTPS.
 
 ## Features
 
@@ -13,34 +16,51 @@ A mobile web app (PWA) that shows your current driving speed from GPS. You can i
 - **Heading** (compass + degrees), **altitude**, **GPS accuracy** indicator
 - **Trip stats**: max, average (moving), distance, moving time
 - **GPS signal lost** warning after 5 s without a fix (tunnels, garages)
-- **Screen stays on** (Wake Lock API)
+- **Screen stays on** (native flag in the Android app, Wake Lock API on the web)
 - **HUD mode**: a mirrored display you can reflect off the windshield at night
 
-## Run it
+## Android app
+
+Build the APK on a PC with Android Studio (JDK 21, Android SDK 36):
+
+```bash
+npm ci
+npm run android:sync                         # copy www/ into the Android project
+cd android && ./gradlew assembleDebug        # → android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+Install the APK on the phone: allow *Install unknown apps* for the app that opens the file (e.g. My Files or Chrome). On first start, allow *Precise* location.
+
+A debug APK is signed with the build machine's own debug key. An APK built on a different machine can't install over the old one, so uninstall the old one first.
+
+## Web app
 
 Browsers allow GPS only over **HTTPS** (or `localhost`).
 
 | Where | How |
 |---|---|
 | Local PC | `npm start` → open http://localhost:8080 |
-| Phone | Host it on any HTTPS static host (e.g. GitHub Pages: *Settings → Pages → Deploy from branch*), open the URL, then *Add to Home screen* |
+| Phone | Host `www/` on any HTTPS static host, open the URL, then *Add to Home screen* |
 
 ## Tests
 
 ```bash
-npm test   # unit tests for js/speed.js (Node built-in test runner, no dependencies)
+npm test   # unit tests for www/js/speed.js (Node built-in test runner, no dependencies)
 ```
 
 ## Structure
 
 ```
-index.html            UI
-css/style.css         styles (dark, large digits, HUD mode)
-js/speed.js           pure logic: haversine, Kalman filter, trip stats, formatting
-js/app.js             geolocation, wake lock, rendering
-sw.js                 offline cache
-manifest.webmanifest  PWA install metadata
-tests/                unit tests
+www/                      the app (shared by web and Android)
+  index.html              UI
+  css/style.css           styles (dark, large digits, HUD mode, landscape layout)
+  js/speed.js             pure logic: haversine, Kalman filter, trip stats, formatting
+  js/app.js               geolocation, wake lock, rendering
+  sw.js                   offline cache (web only)
+  manifest.webmanifest    PWA install metadata
+android/                  native Android project (Capacitor)
+capacitor.config.json     app id and name
+tests/                    unit tests
 ```
 
 ## Limits
