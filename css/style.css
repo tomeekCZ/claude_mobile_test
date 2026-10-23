@@ -49,7 +49,7 @@ html, body {
   aspect-ratio: 1;
   margin: 0 auto;
 }
-.ring { width: 100%; height: 100%; transform: rotate(135deg); }
+.ring { width: 100%; height: 100%; }
 .ring circle { fill: none; stroke-width: 10; stroke-linecap: round; }
 .ring-bg { stroke: var(--panel); stroke-dasharray: 75 100; }
 .ring-fg {
@@ -111,6 +111,23 @@ html, body {
 .controls button.active { border-color: var(--accent); color: var(--accent); }
 
 .error { color: var(--bad); text-align: center; margin: 0; }
+
+/* Short landscape screens (phone in a car mount, Fold cover screen):
+   gauge on the left, stats and buttons on the right, no scrolling. */
+@media (orientation: landscape) and (max-height: 600px) {
+  #app {
+    max-width: none;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 8px 24px;
+  }
+  .status, .error { grid-column: 1 / -1; }
+  .gauge { grid-row: 2 / 4; width: auto; height: calc(100dvh - 72px); }
+  .speed { font-size: min(160px, 28dvh); }
+  .stats { grid-column: 2; align-self: center; }
+  .controls { grid-column: 2; margin-top: 0; }
+}
 
 /* HUD mode: mirrored, speed only, for reflecting off the windshield at night. */
 body.hud .status,

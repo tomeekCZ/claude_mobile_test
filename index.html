@@ -22,8 +22,10 @@
 
     <section class="gauge" id="gauge">
       <svg viewBox="0 0 200 200" class="ring" aria-hidden="true">
-        <circle cx="100" cy="100" r="88" class="ring-bg" pathLength="100" />
-        <circle cx="100" cy="100" r="88" class="ring-fg" id="ring-fg" pathLength="100" />
+        <g transform="rotate(135 100 100)">
+          <circle cx="100" cy="100" r="88" class="ring-bg" pathLength="100" />
+          <circle cx="100" cy="100" r="88" class="ring-fg" id="ring-fg" pathLength="100" />
+        </g>
       </svg>
       <div class="readout">
         <div id="speed" class="speed" aria-live="polite">0</div>
